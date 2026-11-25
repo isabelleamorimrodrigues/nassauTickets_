@@ -1,0 +1,305 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f6f9;
+  color: #1f2937;
+}
+
+.container {
+  max-width: 920px;
+  margin: 32px auto;
+  padding: 0 16px;
+}
+
+.topo {
+  margin-bottom: 20px;
+}
+
+.topo-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.topo h1 {
+  font-size: 1.9rem;
+  color: #0f3d6e;
+}
+
+.topo p {
+  color: #4b5563;
+  margin-top: 4px;
+}
+
+.sessao-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab.ativa {
+  background: #0f3d6e;
+  color: #ffffff;
+  border-color: #0f3d6e;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.card h2 {
+  margin-bottom: 12px;
+  color: #0f3d6e;
+}
+
+.card h3 {
+  margin-top: 12px;
+  margin-bottom: 8px;
+  color: #0f3d6e;
+}
+
+.subtitulo {
+  margin-bottom: 16px;
+  color: #4b5563;
+}
+
+.botoes-totem {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+}
+
+.btn {
+  padding: 12px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-prioritaria {
+  background-color: #b91c1c;
+}
+
+.btn-exames {
+  background-color: #0369a1;
+}
+
+.btn-geral {
+  background-color: #15803d;
+}
+
+.btn-primario {
+  background-color: #0f3d6e;
+}
+
+.btn-secundario {
+  background-color: #d97706;
+}
+
+.btn-neutro {
+  background-color: #475569;
+}
+
+.ticket-box {
+  margin-top: 20px;
+  padding: 18px;
+  border: 2px dashed #0f3d6e;
+  border-radius: 8px;
+  text-align: center;
+  background: #f8fafc;
+}
+
+.ticket-numero {
+  display: block;
+  font-size: 2rem;
+  margin: 8px 0;
+  color: #0f3d6e;
+}
+
+.form-guiche {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.form-guiche input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.chamada-box,
+.painel-destaque {
+  padding: 16px;
+  border-radius: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  margin-bottom: 16px;
+}
+
+.painel-destaque strong {
+  display: block;
+  font-size: 2.2rem;
+  color: #0f3d6e;
+  margin: 6px 0;
+}
+
+.lista-painel {
+  list-style: none;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-painel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+}
+
+.badge {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: #e2e8f0;
+}
+
+.alerta-erro {
+  padding: 10px 14px;
+  background: #fee2e2;
+  color: #991b1b;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.alerta-sucesso {
+  padding: 10px 14px;
+  background: #dcfce7;
+  color: #166534;
+  border-radius: 6px;
+  margin-bottom: 14px;
+}
+
+.vazio {
+  color: #6b7280;
+}
+
+.form-login {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 360px;
+  margin-bottom: 12px;
+}
+
+.form-login input {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.acoes-login {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.dica-teste {
+  color: #64748b;
+}
+
+.filtro-data {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.filtro-data input {
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+.resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.resumo-card {
+  padding: 14px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.resumo-card strong {
+  display: block;
+  font-size: 1.6rem;
+  color: #0f3d6e;
+  margin-top: 4px;
+}
+
+.tabela-relatorio {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+.tabela-relatorio th,
+.tabela-relatorio td {
+  border: 1px solid #e2e8f0;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.tabela-relatorio th {
+  background: #f1f5f9;
+  color: #0f3d6e;
+}

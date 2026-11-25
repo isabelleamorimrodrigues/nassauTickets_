@@ -84,7 +84,7 @@ class FilaService {
         return { erro: "Informe um guichê válido." };
     }
 
-    const proxima = this.escolherProximaSenha();
+    const proxima = this.escolherProximaSenha(); 
     if (!proxima) {
       return { erro: "Não há senhas aguardando na fila." };
     }
