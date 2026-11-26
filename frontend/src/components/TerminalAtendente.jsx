@@ -3,8 +3,15 @@ export default function TerminalAtendente({
   setGuiche,
   chamadaAtual,
   onChamarProxima,
-  onChamarNovamente
+  onChamarNovamente,
+  onIniciarAtendimento,
+  onFinalizarAtendimento
 }) {
+  const podeIniciar = chamadaAtual && chamadaAtual.estado === "CHAMADA";
+  const podeFinalizar =
+    chamadaAtual &&
+    (chamadaAtual.estado === "EM_ATENDIMENTO" || chamadaAtual.estado === "CHAMADA");
+
   return (
     <section className="card">
       <h2>Terminal do Atendente</h2>
@@ -26,7 +33,7 @@ export default function TerminalAtendente({
           type="button"
           className="btn btn-secundario"
           onClick={onChamarNovamente}
-          disabled={!chamadaAtual}
+          disabled={!chamadaAtual || chamadaAtual.estado !== "CHAMADA"}
         >
           Chamar Novamente
         </button>
@@ -35,12 +42,31 @@ export default function TerminalAtendente({
       {chamadaAtual ? (
         <div className="chamada-box">
           <p>
-            <strong>Senha em chamada:</strong> {chamadaAtual.numero} ({chamadaAtual.tipo})
+            <strong>Senha atual:</strong> {chamadaAtual.numero} ({chamadaAtual.tipo})
           </p>
           <p>
             <strong>Guichê:</strong> {chamadaAtual.guiche} | <strong>Chamadas:</strong>{" "}
             {chamadaAtual.chamadas}/2 | <strong>Estado:</strong> {chamadaAtual.estado}
           </p>
+
+          <div className="acoes-atendimento">
+            <button
+              type="button"
+              className="btn btn-geral"
+              onClick={onIniciarAtendimento}
+              disabled={!podeIniciar}
+            >
+              Iniciar Atendimento
+            </button>
+            <button
+              type="button"
+              className="btn btn-exames"
+              onClick={onFinalizarAtendimento}
+              disabled={!podeFinalizar}
+            >
+              Finalizar Atendimento
+            </button>
+          </div>
         </div>
       ) : (
         <p className="vazio">Nenhuma senha chamada neste guichê ainda.</p>

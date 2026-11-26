@@ -5,6 +5,8 @@ import {
   chamarNovamenteSenha,
   chamarProximaSenha,
   emitirSenha,
+  finalizarAtendimento,
+  iniciarAtendimento,
   loginUsuario
 } from "./services/api";
 import TotemCliente from "./components/TotemCliente";
@@ -123,6 +125,36 @@ export default function App() {
     }
   }
 
+  async function handleIniciarAtendimento() {
+    if (!chamadaAtual) return;
+    setErro("");
+    setMensagem("");
+    try {
+      const resultado = await iniciarAtendimento(chamadaAtual.id, guiche);
+      setChamadaAtual(resultado.senha);
+      setMensagem(`Atendimento da senha ${resultado.senha.numero} iniciado.`);
+      carregarPainel();
+    } catch (err) {
+      setErro(err.message);
+    }
+  }
+
+  async function handleFinalizarAtendimento() {
+    if (!chamadaAtual) return;
+    setErro("");
+    setMensagem("");
+    try {
+      const resultado = await finalizarAtendimento(chamadaAtual.id);
+      setChamadaAtual(resultado.senha);
+      setMensagem(
+        `Atendimento da senha ${resultado.senha.numero} finalizado (${resultado.senha.duracaoSegundos}s).`
+      );
+      carregarPainel();
+    } catch (err) {
+      setErro(err.message);
+    }
+  }
+
   return (
     <main className="container">
       <header className="topo topo-flex">
@@ -206,6 +238,8 @@ export default function App() {
               chamadaAtual={chamadaAtual}
               onChamarProxima={handleChamarProxima}
               onChamarNovamente={handleChamarNovamente}
+              onIniciarAtendimento={handleIniciarAtendimento}
+              onFinalizarAtendimento={handleFinalizarAtendimento}
             />
           )}
 

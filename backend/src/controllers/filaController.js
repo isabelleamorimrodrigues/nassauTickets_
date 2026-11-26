@@ -33,6 +33,29 @@ function chamarNovamente(req, res) {
   return res.status(200).json(resultado);
 }
 
+function iniciar(req, res) {
+  const { id } = req.params;
+  const { guiche } = req.body || {};
+  const resultado = filaService.iniciarAtendimento(id, guiche);
+
+  if (resultado.erro) {
+    return res.status(resultado.status || 400).json({ erro: resultado.erro });
+  }
+
+  return res.status(200).json(resultado);
+}
+
+function finalizar(req, res) {
+  const { id } = req.params;
+  const resultado = filaService.finalizarAtendimento(id);
+
+  if (resultado.erro) {
+    return res.status(resultado.status || 400).json({ erro: resultado.erro });
+  }
+
+  return res.status(200).json(resultado);
+}
+
 function painel(req, res) {
   const ultimasSenhas = filaService.painelUltimasCinco();
   return res.status(200).json({ ultimasSenhas });
@@ -42,5 +65,7 @@ module.exports = {
   emitir,
   chamarProxima,
   chamarNovamente,
+  iniciar,
+  finalizar,
   painel
 };

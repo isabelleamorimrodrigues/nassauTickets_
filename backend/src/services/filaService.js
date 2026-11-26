@@ -60,7 +60,9 @@ class FilaService {
       emitidaEm: agora.toISOString(),
       chamadas: 0,
       guiche: null,
-      atendidoEm: null
+      iniciadoEm: null,
+      atendidoEm: null,
+      duracaoSegundos: null
     };
 
     this.senhas.push(senha);
@@ -81,10 +83,20 @@ class FilaService {
 
   chamarProxima(guiche) {
     if (!guiche || !String(guiche).trim()) {
-        return { erro: "Informe um guichê válido." };
+      return { erro: "Informe um guichê válido." };
     }
 
-    const proxima = this.escolherProximaSenha(); 
+    // Marca como NÃO_COMPARECEU senhas chamadas anteriormente que não iniciaram atendimento
+    for (const item of this.senhas) {
+      if (
+        item.estado === ESTADOS.CHAMADA ||
+        item.estado === ESTADOS.CHAMADA_NOVAMENTE
+      ) {
+        item.estado = ESTADOS.NAO_COMPARECEU;
+      }
+    }
+
+    const proxima = this.escolherProximaSenha();
     if (!proxima) {
       return { erro: "Não há senhas aguardando na fila." };
     }
@@ -127,6 +139,57 @@ class FilaService {
       senha,
       audio: `Última chamada: senha ${senha.numero}, prioridade ${senha.tipo}, guichê ${senha.guiche}.`
     };
+  }
+
+  iniciarAtendimento(idSenha, guiche) {
+    const senha = this.senhas.find((s) => s.id === Number(idSenha));
+    if (!senha) {
+      return { erro: "Senha não encontrada.", status: 404 };
+    }
+
+    if (
+      senha.estado !== ESTADOS.CHAMADA &&
+      senha.estado !== ESTADOS.CHAMADA_NOVAMENTE
+    ) {
+      return {
+        erro: `Não é possível iniciar atendimento para senha no estado ${senha.estado}.`,
+        status: 400
+      };
+    }
+
+    senha.estado = ESTADOS.EM_ATENDIMENTO;
+    senha.guiche = guiche || senha.guiche || "Guichê 01";
+    senha.iniciadoEm = new Date().toISOString();
+
+    return { senha };
+  }
+
+  finalizarAtendimento(idSenha) {
+    const senha = this.senhas.find((s) => s.id === Number(idSenha));
+    if (!senha) {
+      return { erro: "Senha não encontrada.", status: 404 };
+    }
+
+    if (
+      senha.estado !== ESTADOS.EM_ATENDIMENTO &&
+      senha.estado !== ESTADOS.CHAMADA &&
+      senha.estado !== ESTADOS.CHAMADA_NOVAMENTE
+    ) {
+      return {
+        erro: `Não é possível finalizar atendimento para senha no estado ${senha.estado}.`,
+        status: 400
+      };
+    }
+
+    const agora = new Date();
+    const baseInicio = senha.iniciadoEm ? new Date(senha.iniciadoEm) : agora;
+    const duracaoSegundos = Math.max(0, Math.round((agora - baseInicio) / 1000));
+
+    senha.estado = ESTADOS.ATENDIDA;
+    senha.atendidoEm = agora.toISOString();
+    senha.duracaoSegundos = duracaoSegundos;
+
+    return { senha };
   }
 
   painelUltimasCinco() {

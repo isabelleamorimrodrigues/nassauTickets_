@@ -77,3 +77,26 @@ export async function buscarAuditoria() {
   }
   return dados.registros || [];
 }
+export async function iniciarAtendimento(id, guiche) {
+  const resposta = await fetch(`${API_URL}/fila/senhas/${id}/iniciar`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ guiche })
+  });
+  const dados = await resposta.json();
+  if (!resposta.ok) {
+    throw new Error(dados.erro || "Erro ao iniciar atendimento.");
+  }
+  return dados;
+}
+
+export async function finalizarAtendimento(id) {
+  const resposta = await fetch(`${API_URL}/fila/senhas/${id}/finalizar`, {
+    method: "POST"
+  });
+  const dados = await resposta.json();
+  if (!resposta.ok) {
+    throw new Error(dados.erro || "Erro ao finalizar atendimento.");
+  }
+  return dados;
+}
